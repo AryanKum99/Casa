@@ -1,8 +1,12 @@
+const ExpressError = require("../utils/ExpressError");
+
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-        req.session.returnTo = req.originalUrl;
         console.log('error');
-        return res.redirect('/user/login');
+        throw new ExpressError({
+            message: "Not Logged in",
+            status: 401
+        })
     }
     next();
 }

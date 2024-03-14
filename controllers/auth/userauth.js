@@ -34,6 +34,7 @@ module.exports.login = catchAsync(async (req, res, next) => {
     try {
         res.status(200).json({ message: 'Logged in successfully' });
     } catch (error) {
+        console.log(error.message);
         next(error);
     }
 });

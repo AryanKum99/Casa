@@ -76,5 +76,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/join', require('./routes/joinRoutes'));
+app.use('/api/services', require('./routes/serviceRoutes'));
 
 module.exports = app;
