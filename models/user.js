@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema(
         cartTotal: {
             type: Number,
             default: 0
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
         }
     },
     { collection: "User" }
