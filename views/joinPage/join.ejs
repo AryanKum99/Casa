@@ -1,0 +1,66 @@
+<html>
+
+<head>
+
+</head>
+
+
+<body>
+    <div class="fullbg" style="background: black;">
+        <div class="signup_portal" style="background: black;">
+            <div class="form-container">
+                <!-- Contact Form -->
+                <form method="post" action="/join">
+                    <div class="form-group">
+                        <label class="form-label1" for="firstName"></label>
+                        <input class="form-input1" type="text" id="firstName" name="firstName" value=<%=user.firstName
+                            %>
+                        required />
+                        placeholder="First Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label2" for="lastName"></label>
+                        <input class="form-input2" type="text" id="lastName" name="lastName" value=<%=user.lastName %>
+                        placeholder="Last Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="username"></label>
+                        <input class="form-input3" type="text" id="username" name="username" value=<%=user.username %>
+                        placeholder="Username" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email"></label>
+                        <input class="form-input4" type="email" id="emailId" name="emailId" value=<%=user.emailId %>
+                        placeholder="Email Address" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="mobileNumber"></label>
+                        <input class="form-input5" type="tel" id="mobileNumber" name="mobileNumber"
+                            value=<%=user.mobileNumber %>
+                        placeholder="Phone Number" />
+                    </div>
+                    <td><label for="typeOfSeller" class="label-font">Choose your profession: </label></td>
+                    <td><select name="typeOfSeller" id="typeOfSeller">
+                            <option value="Builder">Builder</option>
+                            <option value="Interior Designer">Interior Designer</option>
+                            <option value="Architect">Architect</option>
+                        </select></td>
+                    <button type="submit" class="form-button">
+                        <p>Join</p>
+                    </button>
+                </form>
+            </div>
+            <div class="Sign-up">
+                <h2>Sign-Up</h2>
+            </div>
+            <div class="sign-img">
+                <img src="images/s1.png" class="s1" alt="" />
+            </div>
+        </div>
+        <div class="imageofsign">
+            <!-- <img class="s2" src="s2.png" alt="" /> -->
+        </div>
+    </div>
+</body>
+
+</html>

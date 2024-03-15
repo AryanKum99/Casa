@@ -18,13 +18,11 @@ module.exports.register = async (req, res, next) => {
         console.log(newUser);
         const registeredUser = await User.register(newUser, password);
         console.log('success');
-        if (registeredUser) {
-            res.status(200).json({
-                message: 'Registered successfully'
-            });
-        } else {
-            throw new ExpressError({ message: 'Registration failed', status: 401 });
-        }
+        req.login(registeredUser, err => {
+            if (err) return next(err);
+            console.log('loggedIn');
+            res.redirect('/');
+        })
     } catch (error) {
         next(error);
     }
@@ -32,7 +30,7 @@ module.exports.register = async (req, res, next) => {
 
 module.exports.login = catchAsync(async (req, res, next) => {
     try {
-        res.status(200).json({ message: 'Logged in successfully' });
+        res.redirect('/');
     } catch (error) {
         console.log(error.message);
         next(error);
@@ -44,7 +42,16 @@ module.exports.logout = (req, res, next) => {
         if (err) {
             return next(err);
         }; // This function is provided by Passport.js to clear the login session
-        res.status(200).json({ message: 'Logged out successfully' }
-        )
-    })
+        res.redirect('/');
+    }
+    )
 };
+
+
+module.exports.getRegForm = (req, res) => {
+    res.render('auth/signup');
+}
+
+module.exports.getLoginForm = (req, res) => {
+    res.render('auth/login');
+}

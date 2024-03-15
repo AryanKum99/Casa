@@ -7,7 +7,7 @@ module.exports.getFreelancers = catchAsync(async (req, res, next) => {
     if (!freelancers) {
         return next(new ExpressError({ message: "Error!!" }))
     }
-    res.status(200).json(freelancers);
+    res.render('freelancers/show', { freelancers });
 })
 
 module.exports.getArchitects = catchAsync(async (req, res, next) => {

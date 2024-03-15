@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React App</title>
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body>
+    <header class="App-header">
+        <video src="images/main.mp4" muted autoplay loop type="video/mp4"></video>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <% if(!currentUser) {%>
+                <div class="auth-buttons" style="margin-right: 5px;">
+                    <a href="/auth/login" style="text-decoration: none;"><span>Login</span></a>
+                </div>
+                <div class="auth-buttons" style="margin-right: 5px;">
+                    <a href="/auth/signup" style="text-decoration: none;"><span>Sign Up</span></a>
+                </div>
+                <% } else {%>
+                    <div class="auth-buttons" style="margin-right: 5px;">
+                        <a href="/auth/logout" style="text-decoration: none;">Logout</a>
+                    </div>
+                    <div class="auth-buttons" style="text-decoration: none;">
+                        <a href="/services/marketplace/cart">Cart</a>
+                    </div>
+                    <% if(!currentUser.isMember){ %>
+                        <div class="auth-buttons">
+                            <a href="/join" style="text-decoration: none;">JOIN</a>
+                        </div>
+                        <% } %>
+                            <% } %>
+                                </a>
+
+                                </div>
+
+        </nav>
+    </header>
+    <div class="slider">
+        <div class="slide">
+            <h1>REVOLUTIONIZING HOME <span>BUILDING WITH TECHNOLOGY</span></h1>
+        </div>
+    </div>
+    <div class="about-us" id="about">
+        <img class="firstrect" src="images/Rectangle.png" alt="" />
+        <div class="about-heading">
+            <h2 class="who">Who we are</h2>
+            <p>
+                Casa streamlines home building by offering a curated platform
+                connecting homeowners with professionals and an online marketplace for
+                construction materials. With transparency and efficiency, Casa
+                simplifies the process from land acquisition to construction
+                completion, revolutionizing the home building industry
+            </p>
+        </div>
+    </div>
+    <div class="why-us">
+        <img class="secondrect" src="images/Rectangle.png" alt="" />
+        <div class="why-heading">
+            <h2 class="why">Why Us</h2>
+            <div class="frames">
+                <img class="Frame1" src="images/Frame1.png" alt="" />
+                <img class="Frame2" src="images/Frame2.png" alt="" />
+                <img class="Frame3" src="images/Frame3.png" alt="" />
+                <img class="Frame4" src="images/Frame4.png" alt="" />
+            </div>
+        </div>
+    </div>
+    <div class="whatwedo" id="services">
+        <div class="whatwedo-heading">
+            <img src="images/Rectangle.png" alt="" class="fiirdrect" />
+            <h2 class="what">What We Do</h2>
+            <div class="instance1">
+                <a href="/"><img src="images/w1.png" alt="" class="w1" /></a>
+                <img src="images/w2.png" alt="" class="w2" />
+                <a href="/services/marketplace/show"><img src="images/w3.png" alt="" class="w3" /></a>
+                <a href="/services/freelancers"><img src="images/w5.png" alt="" class="w5" /></a>
+                <img src="images/w6.png" alt="" class="w6" />
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="footer">
+            <div class="footer-heading">
+                <img src="images/f1.png" alt="" class="f1" />
+                <img src="images/f2.png" alt="" class="f2" />
+                <img src="images/f3.png" alt="" class="f3" />
+                <img src="images/f5.png" alt="" class="f5" />
+            </div>
+        </div>
+    </section>
+    <div class="last" id="contact">
+        <div class="big-cont1">
+            Site
+            <ul class="insidebc1">
+                <li>Home</li>
+                <li>About</li>
+                <li>Services</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+        <div class="big-cont2">
+            Social
+            <ul class="insidebc2">
+                <li>Instagram</li>
+                <li>LinkedIn</li>
+                <li>Facebook</li>
+            </ul>
+        </div>
+        <div class="big-cont3">
+            Legal
+            <ul class="insidebc3">
+                <li>Privacy</li>
+                <li>Terms of Condition</li>
+            </ul>
+        </div>
+        <div class="big-cont4">
+            Contact
+            <ul class="insidebc4">
+                <li>Casa@gmail.com</li>
+                <li>Whatsapp</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

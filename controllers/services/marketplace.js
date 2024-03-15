@@ -25,7 +25,7 @@ module.exports.getProducts = catchAsync(async (req, res, next) => {
             message: "Error! Can't find Products"
         })
     }
-    res.status(200).json(products);
+    res.render('marketplace/show', { products });
 })
 
 module.exports.getCart = catchAsync(async (req, res, next) => {
@@ -38,17 +38,26 @@ module.exports.getCart = catchAsync(async (req, res, next) => {
         const prod = await product.findOne({ _id: user.cart[i] });
         productArr.push(prod);
     }
-    res.status(200).json({ productArr });
+    res.render('marketplace/cart/show', { productArr, user });
 })
 
 module.exports.addToCart = catchAsync(async (req, res, next) => {
-    const id = req.params.id;
+    const id = (req.params.id).slice(1);
+    console.log(id);
     const user = await User.findOne({ _id: req.user._id });
+    console.log(user)
     const prod = await product.findOne({ _id: id });
+    console.log(prod);
     user.cartTotal += prod.price;
     user.cart.push(id);
     await user.save();
-    res.status(200).json({ message: "added to cart" })
+    const prods = await product.find({});
+    var productArr = [];
+    for (let i = 0; i < user.cart.length; i++) {
+        const prod = await product.findOne({ _id: user.cart[i] });
+        productArr.push(prod);
+    }
+    res.render('marketplace/cart/show', { productArr, user });
 })
 
 module.exports.deleteFrmCart = catchAsync(async (req, res) => {
@@ -56,8 +65,8 @@ module.exports.deleteFrmCart = catchAsync(async (req, res) => {
     const prod = await product.findById(prodId);
     const user = await User.findOne({ _id: req.user._id });
     const index = user.cart.indexOf(prodId);
-    if(!index){
-        return res.status(400).json({message: "Cannot delete from the cart"});
+    if (!index) {
+        return res.status(400).json({ message: "Cannot delete from the cart" });
     }
     if (index > -1) {
         user.cart.splice(index, 1);

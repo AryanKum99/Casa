@@ -3,8 +3,13 @@ const authController = require('../controllers/auth/userauth');
 const passport = require('passport');
 const authRouter = express.Router();
 
-authRouter.route("/signup").post(authController.register);
+authRouter.route("/signup")
+    .get(authController.getRegForm)
+    .post(authController.register);
+
+authRouter.get('/login', authController.getLoginForm);
 authRouter.post('/login', passport.authenticate('local'), authController.login);
-authRouter.route("/logout").delete(authController.logout);
+
+authRouter.get("/logout", authController.logout);
 
 module.exports = authRouter;

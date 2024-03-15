@@ -12,12 +12,24 @@ const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const { isLoggedIn } = require('./middleware/middleware');
 const User = require('./models/user');
+const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
+const flash = require('connect-flash');
+app.set('view engine', 'ejs');
+app.engine('ejs', ejsMate);
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
+const razorpayInstance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY,
+    key_secret: process.env.RAZORPAY_SECRET
+});
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -69,14 +81,57 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next();
 })
-// const razorpayInstance = new Razorpay({
-//     key_id: process.env.RAZORPAY_KEY,
-//     key_secret: process.env.RAZORPAY_SECRET
-// });
 
 
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/join', require('./routes/joinRoutes'));
-app.use('/api/services', require('./routes/serviceRoutes'));
+app.get('/', (req, res) => { res.render('home') });
+
+app.use('/auth', require('./routes/authRoutes'));
+app.use('/join', require('./routes/joinRoutes'));
+app.use('/services', require('./routes/serviceRoutes'));
+app.get('/createOrder', catchAsync(async (req, res) => {
+    const user = await User.findOne({ _id: req.user._id });
+    res.render('marketplace/cart/paymentPage', { user });
+}));
+app.post('/createOrder', async (req, res) => {
+    try {
+        const amount = req.body.amount * 100
+        const options = {
+            amount: amount,
+            currency: 'INR',
+            receipt: 'akum2302@gmail.com'
+        }
+
+        razorpayInstance.orders.create(options,
+            (err, order) => {
+                if (!err) {
+                    res.status(200).send({
+                        success: true,
+                        msg: 'Order Created',
+                        order_id: order.id,
+                        amount: amount,
+                        key_id: process.env.RAZORPAY_KEY,
+                        product_name: "Cart Total",
+                        description: "Cart Total",
+                        contact: "8567345632",
+                        name: "Casa",
+                        email: "Casa@gmail.com"
+                    });
+                }
+                else {
+                    res.status(400).send({ success: false, msg: 'Something went wrong!' });
+                }
+            }
+        );
+        const user = await User.findOne({ _id: req.user._id });
+        while (user.cart.length > 0) {
+            user.cart.pop();
+        }
+        user.cartTotal = 0;
+        await user.save();
+        console.log('success');
+    } catch (error) {
+        console.log(error.message);
+    }
+});
 
 module.exports = app;
