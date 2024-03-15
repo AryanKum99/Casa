@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
         },
+        cart: {
+            type: [String],
+            default: []
+        },
+        cartTotal: {
+            type: Number,
+            default: 0
+        }
     },
     { collection: "User" }
 );

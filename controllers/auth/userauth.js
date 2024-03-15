@@ -40,10 +40,11 @@ module.exports.login = catchAsync(async (req, res, next) => {
 });
 
 module.exports.logout = (req, res, next) => {
-    try {
-        req.logout(); // This function is provided by Passport.js to clear the login session
-        res.status(200).json({ message: 'Logged out successfully' });
-    } catch (error) {
-        next(error);
-    }
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }; // This function is provided by Passport.js to clear the login session
+        res.status(200).json({ message: 'Logged out successfully' }
+        )
+    })
 };
