@@ -18,5 +18,6 @@ servicesRouter.route('/marketplace/show').get(isLoggedIn, prodController.getProd
 
 servicesRouter.route('/marketplace/cart').get(isLoggedIn, prodController.getCart);
 servicesRouter.route('/marketplace/cart/add/:id').post(isLoggedIn, prodController.addToCart);
+servicesRouter.route('/marketplace/deleteFrmCart/:id').delete(isLoggedIn, prodController.deleteFrmCart);
 
 module.exports = servicesRouter;

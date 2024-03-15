@@ -50,3 +50,19 @@ module.exports.addToCart = catchAsync(async (req, res, next) => {
     await user.save();
     res.status(200).json({ message: "added to cart" })
 })
+
+module.exports.deleteFrmCart = catchAsync(async (req, res) => {
+    const prodId = req.params.id;
+    const prod = await product.findById(prodId);
+    const user = await User.findOne({ _id: req.user._id });
+    const index = user.cart.indexOf(prodId);
+    if(!index){
+        return res.status(400).json({message: "Cannot delete from the cart"});
+    }
+    if (index > -1) {
+        user.cart.splice(index, 1);
+    }
+    user.cartTotal = user.cartTotal - prod.price;
+    await user.save();
+    res.status(200).json({ message: 'Deleted from Cart' });
+});
